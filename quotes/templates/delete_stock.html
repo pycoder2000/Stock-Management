@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2> Delete Stock </h2>
+<h6> To remove stock tickers and all financial data, pless the delete item button below.</h6>
+
+<div class="row container">
+  {% if ticker %}
+      {% for item in ticker %}
+          <a href="{% url 'delete' item.ticker %}" class="btn btn-outline-danger mr-2 my-3">Delete {{ item }}</a><br><br>
+      {% endfor %}
+
+  {% else %}
+      Your portfolio appears to be empty.
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+.line {
+    fill: none;
+    stroke-width: 1px;
+}
+
+.axis path {
+    stroke: black;
+    stroke-width: 1px;
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+.tick line {
+    stroke: black;
+    stroke-width: 2px;
+}
+
+#centered {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}

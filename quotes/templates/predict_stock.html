@@ -1,0 +1,171 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block title %} Stock Predict {% endblock %} {% block content %}
+<style>
+    td,
+    th {
+        text-align: center;
+    }
+    
+    hr {
+        position: relative;
+        border: none;
+        height: 3px;
+        background: black;
+    }
+    
+    .wrap {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .button {
+        width: 140px;
+        height: 45px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    .button:hover {
+        background-color: #008CBA;
+        box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+        color: #fff;
+        transform: translateY(-7px);
+    }
+    
+    .mycontent-left {
+        border-right: 3px solid #333;
+        padding-right: 30px;
+    }
+</style>
+
+<body>
+    <div class="row">
+        <div class="col text-center">
+            <hr />
+            <h3>
+                Predict Stocks
+            </h3>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="mycontent-left">
+                    <form action="/predict/" method="post">{% csrf_token %}
+                        <div class="form-group">
+                            <div>
+                                <label for="exampleInputEmail1">Enter Ticker of Company</label>
+                                <div align="center">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex. amzn, googl, fb" name="ticker" style="width:60%" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail2">Enter Days to Predict</label>
+                            <div>
+                                <div align="center">
+                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter any number" name="days" style="width:60%" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="wrap">
+                                <button type="submit" value="Predict" class="button">Predict</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="mycontent-left">
+                    <table align='center' class="table table-bordered table-hover">
+                        <tbody>
+                            <tr>
+                                <td style="width:50%"><strong>Prediction Accuracy</strong></td>
+                                <td style="width:50%">{{ confidence|floatformat:-3 }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50%"><strong>Number of Days</strong></td>
+                                <td style="width:50%">{{ number_of_days }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50%"><strong>Ticker Name</strong></td>
+                                <td style="width:50%">{% if ticker_value == "aapl" %}AAPL{% endif %}{% if ticker_value == "amzn" %}AMZN{% endif %}{% if ticker_value == "googl" %}GOOGL{% endif %}{% if ticker_value == "wmt" %}WMT{% endif %}{% if ticker_value == "fb" %}FB{% endif %}{% if ticker_value == "uber" %}UBER{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50%"><strong>Company Name</strong></td>
+                                <td style="width:50%">{% if ticker_value == "aapl" %}Apple{% endif %}{% if ticker_value == "amzn" %}Amazon{% endif %}{% if ticker_value == "googl" %}Google{% endif %}{% if ticker_value == "wmt" %}Walmart{% endif %}{% if ticker_value == "fb" %}Meta{% endif %}{% if ticker_value == "uber" %}Uber{% endif %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col text-center">
+                <table align='center' class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%"><strong>Predicted Values</strong></td>
+                        </tr>
+                        {% for forecast in forecast %}
+                        <tr>
+                            <td style="width:50%">{{ forecast|floatformat:-2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Ticker Symbol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amazon</td>
+                        <td>AMZN</td>
+                    </tr>
+                    <tr>
+                        <td>Apple</td>
+                        <td>AAPL</td>
+                    </tr>
+                    <tr>
+                        <td>Google</td>
+                        <td>GOOGL</td>
+                    </tr>
+                    <tr>
+                        <td>Walmart</td>
+                        <td>WMT</td>
+                    </tr>
+                    <tr>
+                        <td>Facebook</td>
+                        <td>FB</td>
+                    </tr>
+                    <tr>
+                        <td>Uber Technologies</td>
+                        <td>UBER</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}

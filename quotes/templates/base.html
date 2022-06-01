@@ -1,0 +1,257 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Stock Portfolio</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}"><img style="width: 180px;"src="{% static 'quotes/sp.png' %}" alt="Stock Portoflio"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'about' %}">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'add_stock' %}">Add Stock</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'delete_stock' %}">Delete Stock</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'list_stock' %}">List Stock</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'view_stock' %}">View Graph</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'predict_home' %}">Predict Stock</a>
+      </li>
+    </ul>
+    <form action="{% url 'home' %}" class="form-inline my-2 my-lg-0" method="GET">
+     
+      <input id="myInput" class="form-control mr-sm-2" autocomplete="off" type="search" 
+      placeholder="Search company name or symbol" aria-label="Search" name="ticker" 
+      onClick='document.getElementById("myDropdown").classList.toggle("show") ;' onkeyup="filter('myDropdown','myInput')">
+      
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Stock Quote</button>
+    </form>
+    &nbsp;&nbsp;
+    <span class="form-inline my-2 my-lg-0">
+      {% if user.is_authenticated %}
+        <button class="btn btn-outline-success my-2 my-sm-0">{{user.username}}</button>
+        &nbsp;&nbsp;
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-light my-2 my-sm-0">Login</a>
+        &nbsp;&nbsp;
+        <a href="{% url 'register' %}" class="btn btn-outline-info my-2 my-sm-0">Sign Up</a>
+      {% endif %}
+      </span>
+  </div>
+</nav>
+ <div class="dropdown-content" id="myDropdown">
+
+      </div>
+<div style="position:absolute;right:0;width:300px;display: inline-block;"> </div>
+
+    <div class="container">
+      <br>
+
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-warning alert-dismissable" role="alert">
+              <button class="close" data-dismiss="alert"><small><sup>X</sup></small></button>
+              {{ message }}
+          </div><br>
+          {% endfor %}
+      {% endif %}
+
+    {% block content %}
+
+    {% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+<style>
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -999;
+}
+
+.jumbotron
+{
+  background: rgba(255, 255, 255, 0); 
+}
+div.transbox {
+  margin: 30px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  opacity: 0.6;
+}
+
+div.transbox p {
+  margin: 5%;
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar {
+  -webkit-box-shadow: 10px 10px 20px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 20px -3px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 20px -3px rgba(0,0,0,0.75);
+}
+
+.nav-item::after {
+     content: '';
+     display: block;
+     width: 0px;
+     height: 2px;
+     background: #2aa344;
+     transition: 0.4s
+}
+
+.nav-item:hover::after {
+     width: 100%
+}
+
+.navbar-dark .navbar-nav .active>.nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show>.nav-link,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #2aa344;
+}
+
+.nav-link {
+    padding: 10px 5px;
+    transition: 0.2s;
+}
+
+ /* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+/* The search field */
+#myInput, {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* The search field when it gets focus/clicked on */
+#myInput:focus ,  {outline: 3px solid #ddd;}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown , {
+  position: absolute;
+  display: inline-block;
+  z-index: 10;
+  padding:20px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  width: 400px;
+  border: 1px solid #ddd;
+  z-index: 10;
+  right:150px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;} 
+</style>
+<script>
+var xhttp = new XMLHttpRequest();
+var idG;
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Typical action to be performed when the document is ready:
+       document.getElementById("myDropdown").innerHTML = xhttp.responseText;
+       
+    }
+};
+function filter(id,inp){
+   idG = id;
+   input = document.getElementById(inp);
+   var params = new Object();
+   params.ticker = input.value;
+   xhttp.open("GET", "/search?ticker="+input.value, true);
+   xhttp.send();
+}
+
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("listSearch");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>

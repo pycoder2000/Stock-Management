@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Team{% endblock %}
+
+{% block content %}
+<style>
+  hr {
+        position: relative;
+        border: none;
+        height: 3px;
+        background: black;
+    }
+</style>
+<section class="pt-3 pb-4">
+
+      <div class="container">
+          <div class="row">
+            <div class="col text-center">
+            <hr />
+              <h3>
+                Our Awesome Team
+              </h3>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 text-center">
+              {% load static %}
+                <img class = "img-fluid feature-img p-2 rounded-circle" src="{% static 'quotes/profile.jpg' %}" alt="Parth Desai">
+              <h5>
+                Parth Desai
+              </h5>
+              <p>
+                <i>- 18BCE150</i>
+              </p>
+    
+            </div>
+            <div class="col-md-4 text-center">
+              {% load static %}
+                <img class = "img-fluid feature-img p-2 rounded-circle" src="{% static 'quotes/2.png' %}" alt="Nirav Madhani">
+              <h5>
+                Nirav Madhani
+              </h5>
+              <p>
+                <i>- 18BCE135</i>
+              </p>
+    
+            </div>
+            <div class="col-md-4 text-center">
+                
+                {% load static %}
+                <img class = "img-fluid feature-img p-2 rounded-circle" src="{% static 'quotes/3.jpeg' %}" alt="Parth Panchal">
+                <h5>
+                  Parth Panchal
+                </h5>
+                <p>
+                  <i>- 18BCE147</i>
+                </p>
+            </div>
+          </div>
+  </section>
+  <hr />
+  <div class="row mt-4">
+    <div class="col text-center">
+      <h3>
+        About the Application
+      </h3>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <p>This application is designed to return stock name and pricing information when a user enters a ticker symbol in the search function. Additionally, the "add stock" link in the navigation bar will utilize a database function to store the ticker symbols when requested as a way of developing a personal portfolio.</p>
+
+    <p>The “Add Stock” link is a page designed to show the tickers in the user’s portfolio and allows them to delete them individually as the investment strategy changes over time. Overall, the goal was to utilize an API to get stock information and allow the application to also utilize a database for this information.</p>
+    <br />
+    <ul>
+    <li><a href="https://www.python.org/">Python 3</a> - awesome language.</li>
+    <li><a href="https://www.djangoproject.com/">Django 3</a> - a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</li>
+    <li><a href="https://getbootstrap.com/">bootstrap 4</a> - the world’s most popular front-end component library.</li>
+    <li><a href="https://iexcloud.io/">IEX Cloud</a> - the financial data platform for developers to build and scale financial applications.</li>
+    </ul>
+    <br />
+  </div>
+  <hr />
+  <div class="row mt-4">
+    <div class="col text-center">
+      <h3>
+        Source Code
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+  <a href="https://github.com/Nirav-Madhani/ADF_Project"><img style="width: 35%; float: left;" src="{% static 'quotes/GitHub-Mark-64px.png' %}" alt="Github Profile"><p style="width: 50%; float: right;">Github</p></a>
+  </div>
+  <br>
+  <br>
+</section>
+ 
+{% endblock %}

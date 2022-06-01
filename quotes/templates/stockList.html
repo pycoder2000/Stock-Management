@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Stock List</h2>
+<br>
+<div>
+<input id="listSearch" class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search" name="Filter"
+onkeyup="myFunction()"
+  ></div>
+<br>
+<table class="table table-striped table-bordered table-hover" id="myTable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Company Name</th>
+      <th scope="col">Ticker</th>
+      <th scope="col">Price</th>
+      <th scope="col">Previous Close</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">YTD Change</th>
+      <th scope="col">52 Week High</th>
+      <th scope="col">52 Week Low</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if ticker %}
+      {% for list_item in output %}
+        <tr>
+        <td scope="row">{{ list_item.companyName }}</th>
+        <td>{{ list_item.symbol }}</td>
+        <td>${{ list_item.latestPrice }}</td>
+        <td>${{ list_item.previousClose }}</td>
+        <td>${{ list_item.marketCap }}</td>
+        <td>{{ list_item.ytdChange }}%</td>
+        <td>${{ list_item.week52High }}</td>
+        <td>${{ list_item.week52Low }}</td>
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
