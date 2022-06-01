@@ -71,3 +71,4 @@ Werkzeug==2.0.3
 yahooquery==2.2.15
 zipp==3.8.0
 zope.interface==5.4.0
+gunicorn
